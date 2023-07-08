@@ -12,6 +12,7 @@ export default function KakaoCallback() {
     if (code) {
       fetch(`http://localhost:8888/auth/kakao/callback?code=${code}`, {
         method: "GET",
+        credentials: "include",
       }).then((res) => {
         push("/"); // 로그인 성공 시 메인 페이지로 이동
       });
