@@ -7,7 +7,6 @@ export default function KakaoCallback() {
     query: { code },
   } = useRouter();
 
-  console.log(code);
   useEffect(() => {
     if (code) {
       fetch(`http://localhost:8888/auth/kakao/callback?code=${code}`, {
@@ -17,6 +16,6 @@ export default function KakaoCallback() {
         push("/"); // 로그인 성공 시 메인 페이지로 이동
       });
     }
-  }, [code]);
+  }, [code, push]);
   return <div>카카오 로그인 콜백 페이지</div>;
 }
