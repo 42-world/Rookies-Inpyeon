@@ -1,18 +1,23 @@
+import { useRouter } from "next/router";
 import { FormEvent, useRef } from "react";
 
 export default function Write() {
   const titleRef = useRef<HTMLInputElement | null>(null);
   const writerRef = useRef<HTMLInputElement | null>(null);
   const contentRef = useRef<HTMLTextAreaElement | null>(null);
+  const passwordRef = useRef<HTMLInputElement | null>(null);
+  const {
+    query: { soldierID, linkID },
+  } = useRouter();
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const data = {
-      soldierId: 0,
+      soldierId: soldierID,
       title: titleRef.current?.value,
       writer: writerRef.current?.value,
       content: contentRef.current?.value,
-      linkId: "",
-      isHidden: false,
+      linkId: linkID,
+      password: passwordRef.current?.value,
     };
     fetch("http://localhost:8888/letter", {
       method: "post",
@@ -36,6 +41,13 @@ export default function Write() {
         className="border-2"
         maxLength={15}
         ref={writerRef}
+      />
+      <input
+        type="password"
+        placeholder="비밀번호"
+        className="border-2"
+        maxLength={15}
+        ref={passwordRef}
       />
       <textarea
         placeholder="글 내용"
