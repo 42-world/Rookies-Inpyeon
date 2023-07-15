@@ -12,7 +12,6 @@ export default function Write() {
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const data = {
-      soldierId: soldierID,
       title: titleRef.current?.value,
       writer: writerRef.current?.value,
       content: contentRef.current?.value,
