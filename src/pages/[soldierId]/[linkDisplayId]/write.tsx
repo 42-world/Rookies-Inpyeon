@@ -7,7 +7,7 @@ export default function Write() {
   const contentRef = useRef<HTMLTextAreaElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
   const {
-    query: { soldierID, linkID },
+    query: { soldierId, linkDisplayId },
   } = useRouter();
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -15,7 +15,7 @@ export default function Write() {
       title: titleRef.current?.value,
       writer: writerRef.current?.value,
       content: contentRef.current?.value,
-      linkId: Number(linkID),
+      linkDisplayId,
       password: passwordRef.current?.value,
     };
     fetch("http://localhost:8888/letter", {
