@@ -12,7 +12,7 @@ export default function Home() {
       <Link href="/auth/login">로그인 하러가기</Link>
       <Link href="/eunsoo/gud/write">글쓰기</Link>
       <Link href="/eunsoo/gud">편지 목록</Link>
-      <Link href="/eunsoo/links">링크 목록</Link>
+      <Link href="/eunsoo">링크 목록</Link>
       <Link href="/soldiers">군인 목록</Link>
     </main>
   );
