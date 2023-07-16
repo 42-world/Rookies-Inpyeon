@@ -1,44 +1,47 @@
 import Link from "next/link";
 import { GetServerSideProps } from "next";
+import { useRouter } from "next/router";
 
 import { Letter } from "@/types/Letter";
-import { useRouter } from "next/router";
+import { httpClient } from "@/services";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { soldierNickname, displayId } = context.query;
-  const soldierRes = await fetch(
-    `http://localhost:8888/soldier?nickname=${soldierNickname}`
-  ).then((res) => res.json());
-  if (!soldierRes) return { props: { letters: [] } };
+  const soldierRes = await httpClient({
+    path: `/soldier?nickname=${soldierNickname}`,
+  });
+  if (!soldierRes) return { props: { letters: null } };
 
-  const linkRes = await fetch(
-    `http://localhost:8888/link?soldierId=${soldierRes.id}&displayId=${displayId}`
-  ).then((res) => res.json());
-  if (!linkRes) return { props: { letters: [] } };
+  const linkRes = await httpClient({
+    path: `/link?soldierId=${soldierRes.id}&displayId=${displayId}`,
+  });
+  if (!linkRes) return { props: { letters: null } };
 
-  const letterRes = await fetch(
-    `http://localhost:8888/letter/by/linkId/${linkRes.id}`
-  ).then((res) => res.json());
-
+  const letterRes = await httpClient({
+    path: `/letter/by/linkId/${linkRes.id}`,
+  });
   return {
-    props: { letters: letterRes ?? [] },
+    props: { letters: letterRes ?? null },
   };
 };
 
-export default function Letters({ letters }: { letters: Letter[] }) {
+export default function Letters({ letters }: { letters: Letter[] | null }) {
   const {
     query: { soldierID, linkID },
   } = useRouter();
+
+  if (!letters) return <h1>군인 혹은 링크가 잘못되었습니다</h1>;
   return (
     <main>
       <h1>편지 목록</h1>
-      {letters?.map((letter, index) => (
-        <Link
-          key={`${linkID}-${letter.id}`}
-          href={`/${soldierID}/${letter.linkId}/${letter.id}`}>
-          <h3>{letter.title}</h3>
-        </Link>
-      ))}
+      {letters &&
+        letters.map((letter, index) => (
+          <Link
+            key={`${linkID}-${letter.id}`}
+            href={`/${soldierID}/${letter.linkId}/${letter.id}`}>
+            <h3>{letter.title}</h3>
+          </Link>
+        ))}
     </main>
   );
 }
