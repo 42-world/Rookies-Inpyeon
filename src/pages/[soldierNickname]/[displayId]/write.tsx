@@ -1,5 +1,7 @@
-import { WriteForm } from "@/components";
 import { GetServerSideProps } from "next";
+
+import { WriteForm } from "@/components";
+import { httpClient } from "@/services";
 
 interface Props {
   soldierNickname: string;
@@ -8,14 +10,14 @@ interface Props {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { soldierNickname, displayId } = context.query;
-  const soldierRes = await fetch(
-    `http://localhost:8888/soldier?nickname=${soldierNickname}`
-  ).then((res) => res.json());
+  const soldierRes = await httpClient({
+    path: `/soldier?nickname=${soldierNickname}`,
+  });
   if (!soldierRes) return { props: { soldierNickname: null, id: null } };
 
-  const linkRes = await fetch(
-    `http://localhost:8888/link?soldierId=${soldierRes.id}&displayId=${displayId}`
-  ).then((res) => res.json());
+  const linkRes = await httpClient({
+    path: `/link?soldierId=${soldierRes.id}&displayId=${displayId}`,
+  });
   if (!linkRes) return { props: { soldierNickname, id: null } };
 
   return {
