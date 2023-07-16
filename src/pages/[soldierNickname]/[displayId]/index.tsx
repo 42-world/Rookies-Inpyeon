@@ -39,7 +39,7 @@ export default function Letters({ letters }: { letters: Letter[] | null }) {
           <Link
             key={`${linkID}-${letter.id}`}
             href={`/${soldierID}/${letter.linkId}/${letter.id}`}>
-            <h3>{letter.title}</h3>
+            <h3>{letter.writer}이(가) 쓴 편지입니다</h3>
           </Link>
         ))}
     </main>

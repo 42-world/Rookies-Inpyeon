@@ -8,9 +8,10 @@ export default function Home() {
   return (
     <main
       className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}>
+      <h3>차영훈님에게 편지를 작성해주세요</h3>
       <Link href="/auth/login">로그인 하러가기</Link>
-      <Link href="/eunsoo/jvq/write">글쓰기</Link>
-      <Link href="/eunsoo/jvq">편지 목록</Link>
+      <Link href="/eunsoo/jzo/write">글쓰기</Link>
+      <Link href="/eunsoo/jzo">편지 목록</Link>
     </main>
   );
 }
