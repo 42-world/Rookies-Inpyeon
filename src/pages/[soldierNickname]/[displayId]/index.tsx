@@ -21,7 +21,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   ).then((res) => res.json());
 
   return {
-    props: { letter: letterRes ?? [] },
+    props: { letters: letterRes ?? [] },
   };
 };
 
