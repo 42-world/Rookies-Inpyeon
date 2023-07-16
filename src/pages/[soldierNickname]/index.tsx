@@ -1,11 +1,12 @@
 import { GetServerSideProps } from "next";
 
 import { httpClient } from "@/services";
-import { Link } from "@/types/Link";
+import { Link as ResponseLink } from "@/types/Link";
+import Link from "next/link";
 
 interface Props {
   soldierNickname: string;
-  links: Link[];
+  links: ResponseLink[];
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
@@ -17,11 +18,14 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   const linkRes = await httpClient({
     path: `/link/by/soldierId/${soldierRes.id}`,
+    headers: {
+      Cookie: context.req.headers.cookie,
+    },
   });
-  if (!linkRes) return { props: { links: null } };
+  if (!linkRes) return { props: { soldierNickname, links: null } };
 
   return {
-    props: { links: linkRes ?? null },
+    props: { soldierNickname, links: linkRes ?? null },
   };
 };
 
@@ -32,7 +36,11 @@ export default function Links({ soldierNickname, links }: Props) {
       <h1>{soldierNickname} 링크 목록</h1>
       <ul className="flex flex-col">
         {links.map((link) => (
-          <li key={`link-${link.id}`}>{link.displayId}</li>
+          <Link
+            key={`link-${link.id}`}
+            href={`/${soldierNickname}/${link.displayId}`}>
+            {link.displayId}
+          </Link>
         ))}
       </ul>
     </main>
