@@ -5,11 +5,25 @@ import { Letter } from "@/types/Letter";
 import { useRouter } from "next/router";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { letterID } = context.query;
-  const res = await fetch(`http://localhost:8888/letter/${letterID}`);
-  const letter = await res.json();
+  const { soldierNickname, displayId } = context.query;
+  const soldierRes = await fetch(
+    `http://localhost:8888/soldier?nickname=${soldierNickname}`
+  ).then((res) => res.json());
+  if (!soldierRes) return { props: { letters: [] } };
+
+  const linkRes = await fetch(
+    `http://localhost:8888/link?soldierId=${soldierRes.id}&displayId=${displayId}`
+  ).then((res) => res.json());
+  if (!soldierRes) return { props: { letters: [] } };
+
+  const letterRes = await fetch(
+    `http://localhost:8888/letter/by/linkId/${linkRes.id}`
+  ).then((res) => res.json());
+
+  console.log(letterRes);
+  // TODO: 여기서 오류 발생
   return {
-    props: { letter },
+    props: { letter: letterRes.letters ?? [] },
   };
 };
 
