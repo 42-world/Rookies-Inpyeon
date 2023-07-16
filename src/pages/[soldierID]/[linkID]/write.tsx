@@ -15,10 +15,13 @@ export default function Write() {
       title: titleRef.current?.value,
       writer: writerRef.current?.value,
       content: contentRef.current?.value,
-      linkId: linkID,
+      linkId: Number(linkID),
       password: passwordRef.current?.value,
     };
     fetch("http://localhost:8888/letter", {
+      headers: {
+        "Content-Type": "application/json;charset=utf-8",
+      },
       method: "post",
       body: JSON.stringify(data),
     }).then((res) => console.log(res));
@@ -32,6 +35,7 @@ export default function Write() {
         placeholder="제목"
         className="border-2"
         maxLength={42}
+        required
         ref={titleRef}
       />
       <input
@@ -39,6 +43,7 @@ export default function Write() {
         placeholder="작성자"
         className="border-2"
         maxLength={15}
+        required
         ref={writerRef}
       />
       <input
@@ -46,12 +51,14 @@ export default function Write() {
         placeholder="비밀번호"
         className="border-2"
         maxLength={15}
+        required
         ref={passwordRef}
       />
       <textarea
         placeholder="글 내용"
         className="border-2"
         ref={contentRef}
+        required
         maxLength={4000}
       />
       <button type="submit">전송하기</button>
