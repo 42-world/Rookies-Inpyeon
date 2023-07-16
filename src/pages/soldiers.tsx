@@ -11,6 +11,9 @@ interface Props {
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const soldierRes = await httpClient({
     path: `/soldier/all`,
+    headers: {
+      Cookie: context.req.headers.cookie,
+    },
   });
   if (!soldierRes) return { props: { soldiers: null } };
 
@@ -26,9 +29,7 @@ export default function Soldiers({ soldiers }: Props) {
     <div>
       <h1>내 군인</h1>
       {soldiers.map((soldier) => (
-        <Link
-          key={`soldier-${soldier.id}`}
-          href={`/soldiers/${soldier.nickname}`}>
+        <Link key={`soldier-${soldier.id}`} href={`/${soldier.nickname}`}>
           {soldier.nickname}
         </Link>
       ))}
