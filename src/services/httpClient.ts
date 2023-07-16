@@ -6,7 +6,7 @@ interface Props {
 }
 
 export async function httpClient({ path, method, body, headers }: Props) {
-  const res = await fetch("http://inpyeon.rookies.kr:8889" + path, {
+  const res = await fetch("http://localhost:8889" + path, {
     method: "GET",
     body,
     headers,
