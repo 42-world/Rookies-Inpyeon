@@ -14,16 +14,14 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const linkRes = await fetch(
     `http://localhost:8888/link?soldierId=${soldierRes.id}&displayId=${displayId}`
   ).then((res) => res.json());
-  if (!soldierRes) return { props: { letters: [] } };
+  if (!linkRes) return { props: { letters: [] } };
 
   const letterRes = await fetch(
     `http://localhost:8888/letter/by/linkId/${linkRes.id}`
   ).then((res) => res.json());
 
-  console.log(letterRes);
-  // TODO: 여기서 오류 발생
   return {
-    props: { letter: letterRes.letters ?? [] },
+    props: { letter: letterRes ?? [] },
   };
 };
 
@@ -31,11 +29,10 @@ export default function Letters({ letters }: { letters: Letter[] }) {
   const {
     query: { soldierID, linkID },
   } = useRouter();
-  console.log(letters);
   return (
     <main>
       <h1>편지 목록</h1>
-      {letters.map((letter, index) => (
+      {letters?.map((letter, index) => (
         <Link
           key={`${linkID}-${letter.id}`}
           href={`/${soldierID}/${letter.linkId}/${letter.id}`}>

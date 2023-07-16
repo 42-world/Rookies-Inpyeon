@@ -16,7 +16,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const linkRes = await fetch(
     `http://localhost:8888/link?soldierId=${soldierRes.id}&displayId=${displayId}`
   ).then((res) => res.json());
-  if (!soldierRes) return { props: { soldierNickname, id: null } };
+  if (!linkRes) return { props: { soldierNickname, id: null } };
 
   return {
     props: { soldierNickname, id: linkRes.id ?? null },
