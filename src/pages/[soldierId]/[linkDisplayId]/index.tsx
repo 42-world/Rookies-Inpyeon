@@ -1,34 +1,15 @@
 import Link from "next/link";
-import { GetStaticPaths, GetStaticProps } from "next";
+import { GetServerSideProps } from "next";
 
 import { Letter } from "@/types/Letter";
 import { useRouter } from "next/router";
 
-export const getStaticPaths: GetStaticPaths = async () => {
-  const soldiers: string[] = await fetch("http://localhost:8888/soldier").then(
-    (res) => res.json()
-  );
-  const link = soldiers.map(async (soldier) => {
-    return await fetch(`http://localhost:8888/link?soldierId=${soldier}`).then(
-      (res) => res.json()
-    );
-  });
-
-  console.log(link);
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { letterID } = context.query;
+  const res = await fetch(`http://localhost:8888/letter/${letterID}`);
+  const letter = await res.json();
   return {
-    paths: {},
-    fallback: false,
-  };
-};
-
-export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const { linkDisplayId } = params;
-  const res = await fetch(
-    `http://localhost:8888/letter?linkDisplayId=${linkDisplayId}`
-  );
-  const letters = await res.json();
-  return {
-    props: { letters },
+    props: { letter },
   };
 };
 
