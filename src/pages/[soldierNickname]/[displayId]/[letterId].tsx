@@ -3,7 +3,7 @@ import { GetServerSideProps } from "next";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { letterId } = context.query;
-  const res = await fetch(`http://localhost:8888/letter/${letterId}`);
+  const res = await fetch(`http://localhost:8889/letter/${letterId}`);
   const letter = await res.json();
   return {
     props: { letter },

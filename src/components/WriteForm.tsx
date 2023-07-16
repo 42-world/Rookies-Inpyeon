@@ -19,7 +19,7 @@ export const WriteForm = ({ linkId }: Props) => {
       linkId,
       password: passwordRef.current?.value,
     };
-    fetch("http://localhost:8888/letter", {
+    fetch("http://localhost:8889/letter", {
       headers: {
         "Content-Type": "application/json;charset=utf-8",
       },
