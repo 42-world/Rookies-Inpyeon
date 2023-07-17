@@ -1,5 +1,6 @@
 import { FormEvent, useRef } from "react";
 import { Button, Input } from "@rookies-team/design";
+import { useRouter } from "next/router";
 
 interface Props {
   linkId: number;
@@ -10,6 +11,7 @@ export const WriteForm = ({ linkId }: Props) => {
   const writerRef = useRef<HTMLInputElement | null>(null);
   const contentRef = useRef<HTMLTextAreaElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
+  const router = useRouter();
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -26,7 +28,10 @@ export const WriteForm = ({ linkId }: Props) => {
       },
       method: "post",
       body: JSON.stringify(data),
-    }).then((res) => console.log(res));
+    }).then((res) => {
+      alert("편지가 정상적으로 등록되었습니다");
+      router.push("/");
+    });
   }
 
   return (
