@@ -49,22 +49,24 @@ export const WriteForm = ({ linkId }: Props) => {
       />
       {isSecret && (
         <Input
+          label="비밀번호"
+          placeholder="비밀번호를 입력해 주세요."
           type="password"
-          placeholder="비밀번호"
           maxLength={15}
           required
           ref={passwordRef}
         />
       )}
       <Input
+        label="이름"
+        placeholder="군인에게 보여질 이름을 입력해 주세요."
         type="text"
-        placeholder="작성자"
-        maxLength={15}
+        maxLength={20}
         required
         ref={writerRef}
       />
       <textarea
-        placeholder="글 내용"
+        placeholder="군인에게 전달하고 싶은 내용을 입력해 주세요."
         className="border-2 mt-4"
         cols={30}
         rows={15}
