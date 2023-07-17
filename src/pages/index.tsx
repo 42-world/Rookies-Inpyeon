@@ -28,34 +28,34 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 };
 
 export default function Home({ soldiers }: Props) {
+  if (!soldiers)
+    return (
+      <div>
+        <Text text="로그인이 되어 있지 않아요." />
+        <Link href="/auth/login">
+          <Button variant="primary" type="button" text="로그인 하러가기" />
+        </Link>
+      </div>
+    );
+  if (soldiers && soldiers.length === 0)
+    return (
+      <TextWithButton
+        text="등록된 군인이 없어요."
+        link="/new"
+        buttonText="군인 등록하기"
+      />
+    );
   return (
     <>
-      {soldiers ? (
-        <>
-          <h1>내 군인 목록</h1> {/* TODO: 디자인에 없는 부분임 */}
-          {soldiers.map((soldier) => (
-            <Link key={`soldier-${soldier.id}`} href={`/${soldier.nickname}`}>
-              <SoldierInfo soldier={soldier} />
-            </Link>
-          ))}
-          <Link href="/new">
-            <Button className="w-fit" text="새 군인 등록하기" />
-          </Link>
-        </>
-      ) : (
-        <div>
-          <Text text="로그인이 되어 있지 않아요." />
-          <Link href="/auth/login">
-            <Button variant="primary" type="button" text="로그인 하러가기" />
-          </Link>
-        </div>
-      )}
-      {soldiers && soldiers.length === 0 && (
-        <TextWithButton
-          text="등록된 군인이 없어요."
-          buttonText="군인 등록하기"
-        />
-      )}
+      <h1>내 군인 목록</h1> {/* TODO: 디자인에 없는 부분임 */}
+      {soldiers.map((soldier) => (
+        <Link key={`soldier-${soldier.id}`} href={`/${soldier.nickname}`}>
+          <SoldierInfo soldier={soldier} />
+        </Link>
+      ))}
+      <Link href="/new">
+        <Button className="w-fit" text="새 군인 등록하기" />
+      </Link>
       {/* <Link href="/auth/login">로그인 하러가기</Link> */}
       {/* <Link href="/eunsoo/gud/write">글쓰기</Link> */}
       {/* <Link href="/eunsoo/gud">편지 목록</Link> */}
