@@ -41,7 +41,9 @@ export const WriteForm = ({ linkId }: Props) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="w-full flex flex-col items-center">
+    <form
+      onSubmit={handleSubmit}
+      className="w-full flex flex-col items-start gap-4">
       <Checkbox
         checked={isSecret}
         labelText="비밀글"
@@ -53,7 +55,8 @@ export const WriteForm = ({ linkId }: Props) => {
           placeholder="비밀번호를 입력해 주세요."
           type="password"
           maxLength={15}
-          required
+          required={true}
+          className="w-full"
           ref={passwordRef}
         />
       )}
@@ -62,7 +65,8 @@ export const WriteForm = ({ linkId }: Props) => {
         placeholder="군인에게 보여질 이름을 입력해 주세요."
         type="text"
         maxLength={20}
-        required
+        required={true}
+        className="w-full"
         ref={writerRef}
       />
       <textarea

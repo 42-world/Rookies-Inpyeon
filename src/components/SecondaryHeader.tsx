@@ -4,7 +4,7 @@ import { Button, Text } from "@rookies-team/design";
 interface Props {
   link: string;
   buttonText: string;
-  headerText: string;
+  headerText?: string;
 }
 
 export const SecondaryHeader = ({ link, buttonText, headerText }: Props) => {
@@ -13,7 +13,7 @@ export const SecondaryHeader = ({ link, buttonText, headerText }: Props) => {
       <Link href={link}>
         <Button type="button" variant="text" text={buttonText} />
       </Link>
-      <Text size="heading2" text={headerText} />
+      {headerText && <Text size="heading2" text={headerText} />}
     </div>
   );
 };
