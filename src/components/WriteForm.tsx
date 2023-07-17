@@ -1,6 +1,7 @@
 import { FormEvent, useRef, useState } from "react";
 import { Button, Checkbox, Input } from "@rookies-team/design";
 import { useRouter } from "next/router";
+import { httpClient } from "@/services";
 
 interface Props {
   linkId: number;
@@ -16,20 +17,20 @@ export const WriteForm = ({ linkId }: Props) => {
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const data = {
+    const data: Record<string, string | number | undefined> = {
       title: titleRef.current?.value,
       writer: writerRef.current?.value,
       content: contentRef.current?.value,
       linkId,
-      password: passwordRef.current?.value,
     };
-    fetch("http://localhost:8889/letter", {
-      headers: {
-        "Content-Type": "application/json;charset=utf-8",
-      },
-      method: "post",
+    if (isSecret) data.password = passwordRef.current?.value;
+
+    httpClient({
+      path: "/letter",
+      method: "POST",
       body: JSON.stringify(data),
-    }).then(() => {
+    }).then((res) => {
+      if (!res) return;
       alert("편지가 정상적으로 등록되었습니다");
       router.reload();
     });
