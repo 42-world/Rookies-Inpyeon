@@ -395,10 +395,10 @@
     picocolors "^1.0.0"
     tslib "^2.5.0"
 
-"@rookies-team/design@^0.25.2":
-  version "0.25.2"
-  resolved "https://registry.yarnpkg.com/@rookies-team/design/-/design-0.25.2.tgz#9cae7879a8ba1337bf409545217953c1b41405b4"
-  integrity sha512-Gf36pnRENQ9/bj7w16LxywCgJR80OxP87jfeYfJEjvlc+VnUJ3HQLI62ll98JYByQdi+M6pJFecai9iLZOWjSw==
+"@rookies-team/design@^0.25.3":
+  version "0.25.3"
+  resolved "https://registry.yarnpkg.com/@rookies-team/design/-/design-0.25.3.tgz#6f0eeb9f691c41879885941f6d5931f6b2fa609e"
+  integrity sha512-wGaRQdXi6klbGzGZggCXdhNJ2oYdcsEB9fU/vGLUhZa3MZLg9UYIobZGFb9zQUZd+pIlgDxmGBBRlj+QfYXSuQ==
   dependencies:
     "@svgr/core" "^8.0.0"
     classnames "^2.3.2"
