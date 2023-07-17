@@ -35,12 +35,19 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 };
 
 export default function Links({ soldierNickname, soldier, links }: Props) {
+  const handleClick = () => {
+    navigator.clipboard.writeText(
+      `https://localhost:3000/${soldier.nickname}` // TODO: 링크 수정
+    );
+  };
+
   if (!links) return <h1>존재하지 않는 군인입니다</h1>;
   return (
     <>
       <SoldierInfo soldier={soldier} />
       {!links || links.length === 0 ? (
         <TextWithButton
+          onClick={handleClick}
           text={`아직 ${soldierNickname} 님에게 작성된 편지가 없어요.\n지금 바로 주변 사람들에게 링크를 전송해 보세요.`}
           buttonText="내 우편함 링크 복사하기"
         />
