@@ -28,9 +28,9 @@ export const WriteForm = ({ linkId }: Props) => {
       },
       method: "post",
       body: JSON.stringify(data),
-    }).then((res) => {
+    }).then(() => {
       alert("편지가 정상적으로 등록되었습니다");
-      router.push("/");
+      router.reload();
     });
   }
 
