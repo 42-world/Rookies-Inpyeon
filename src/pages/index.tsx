@@ -4,7 +4,7 @@ import { Inter } from "next/font/google";
 
 import { httpClient } from "@/services";
 import { Soldier } from "@/types/Soldier";
-import { SoldierInfo } from "@/components";
+import { SoldierInfo, TextWithButton } from "@/components";
 import { Button, Text } from "@rookies-team/design";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -29,7 +29,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
 export default function Home({ soldiers }: Props) {
   return (
-    <main>
+    <>
       {soldiers ? (
         <>
           <h1>내 군인 목록</h1> {/* TODO: 디자인에 없는 부분임 */}
@@ -38,6 +38,9 @@ export default function Home({ soldiers }: Props) {
               <SoldierInfo soldier={soldier} />
             </Link>
           ))}
+          <Link href="/new">
+            <Button className="w-fit" text="새 군인 등록하기" />
+          </Link>
         </>
       ) : (
         <div>
@@ -48,17 +51,16 @@ export default function Home({ soldiers }: Props) {
         </div>
       )}
       {soldiers && soldiers.length === 0 && (
-        <div>
-          {/* TODO: 임시 (여기 아직 테스트 못해봄) */}
-          <Text text="등록된 군인이 없어요." />
-          <Button type="button" text="군인 등록하기" />
-        </div>
+        <TextWithButton
+          text="등록된 군인이 없어요."
+          buttonText="군인 등록하기"
+        />
       )}
       {/* <Link href="/auth/login">로그인 하러가기</Link> */}
       {/* <Link href="/eunsoo/gud/write">글쓰기</Link> */}
       {/* <Link href="/eunsoo/gud">편지 목록</Link> */}
       {/* <Link href="/eunsoo">링크 목록</Link> */}
       {/* <Link href="/soldiers">군인 목록</Link> */}
-    </main>
+    </>
   );
 }

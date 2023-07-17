@@ -1,14 +1,9 @@
 import { FormEvent, useRef } from "react";
 import { useRouter } from "next/router";
 import { Button } from "@rookies-team/design";
-
 import { httpClient } from "@/services";
 
-interface Props {
-  cookie: string;
-}
-
-export const SoldierAddForm = ({ cookie }: Props) => {
+export const SoldierAddForm = () => {
   const campIdRef = useRef<HTMLInputElement | null>(null);
   const nameRef = useRef<HTMLInputElement | null>(null);
   const nicknameRef = useRef<HTMLInputElement | null>(null);
@@ -24,11 +19,8 @@ export const SoldierAddForm = ({ cookie }: Props) => {
 
     httpClient({
       path: "/soldier",
-      method: "post",
       body: JSON.stringify(data),
-      headers: {
-        Cookie: cookie,
-      },
+      method: "post",
     }).then((res) => {
       console.log(res);
       router.push("/");
@@ -37,9 +29,9 @@ export const SoldierAddForm = ({ cookie }: Props) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <input type="text" placeholder="부대명" required />
-      <input type="text" placeholder="이름" required />
-      <input type="text" placeholder="별명" required />
+      <input type="text" placeholder="부대명" ref={campIdRef} required />
+      <input type="text" placeholder="이름" ref={nameRef} required />
+      <input type="text" placeholder="별명" ref={nicknameRef} required />
       <Button type="submit" text="등록하기" />
     </form>
   );

@@ -44,7 +44,7 @@ export default function Letters({ soldier, letters }: Props) {
   console.log(letters);
   if (!letters) return <h1>군인 혹은 링크가 잘못되었습니다</h1>;
   return (
-    <main>
+    <>
       <SoldierInfo soldier={soldier} />
       <ul className="flex flex-col">
         {letters &&
@@ -60,6 +60,6 @@ export default function Letters({ soldier, letters }: Props) {
             // </li>
           ))}
       </ul>
-    </main>
+    </>
   );
 }
