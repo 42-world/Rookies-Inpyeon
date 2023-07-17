@@ -9,7 +9,7 @@ export default function KakaoCallback() {
 
   useEffect(() => {
     if (code) {
-      fetch(`http://localhost:8888/auth/kakao/callback?code=${code}`, {
+      fetch(`http://localhost:8889/auth/kakao/callback?code=${code}`, {
         method: "GET",
         credentials: "include",
       }).then((res) => {
