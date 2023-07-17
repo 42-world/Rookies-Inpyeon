@@ -1,11 +1,10 @@
 import Link from "next/link";
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
+import { ListItem } from "@rookies-team/design";
 
 import { Letter } from "@/types/Letter";
 import { httpClient } from "@/services";
-import { useState } from "react";
-import { LetterLink } from "@/components/LetterLink";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   console.log("cookie: ", context.req.headers.cookie);
@@ -44,9 +43,15 @@ export default function Letters({ letters }: { letters: Letter[] | null }) {
       <ul className="flex flex-col">
         {letters &&
           letters.map((letter) => (
-            <li key={`${displayId}-${letter.id}`}>
-              <LetterLink letter={letter} />
-            </li>
+            <ListItem
+              key={`${displayId}-${letter.id}`}
+              secondaryTextFirst={letter.createdAt}
+              // secondaryTextSecond={}
+              title={`${letter.writer}님이 보낸 인편입니다!`}
+            />
+            // <li key={`${displayId}-${letter.id}`}>
+            //   <LetterLink letter={letter} />
+            // </li>
           ))}
       </ul>
     </main>
