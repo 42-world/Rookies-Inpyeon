@@ -5,7 +5,7 @@ import { httpClient } from "@/services";
 import { Link as ResponseLink } from "@/types/Link";
 import { SoldierInfo, TextWithButton } from "@/components";
 import { Soldier } from "@/types/Soldier";
-import { Button, Text } from "@rookies-team/design";
+import { Button, ListItem, Text } from "@rookies-team/design";
 
 interface Props {
   soldierNickname: string;
@@ -35,11 +35,15 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 };
 
 export default function Links({ soldierNickname, soldier, links }: Props) {
-  // const handleClick = () => {
-  //   navigator.clipboard.writeText(
-  //     `https://localhost:3000/${soldier.nickname}` // TODO: 링크 수정
-  //   );
-  // };
+  const handleClick = (displayId: string) => {
+    return () => {
+      navigator.clipboard
+        .writeText(
+          `http://localhost:3000/${soldier.nickname}/${displayId}/write`
+        )
+        .then(() => alert("링크가 복사되었어요!"));
+    };
+  };
 
   if (!links) return <h1>존재하지 않는 군인입니다</h1>;
   return (
@@ -58,11 +62,20 @@ export default function Links({ soldierNickname, soldier, links }: Props) {
         //   buttonText="내 우편함 링크 복사하기"
         // />
         links.map((link) => (
-          <Link
+          <div
             key={`link-${link.id}`}
-            href={`/${soldierNickname}/${link.displayId}`}>
-            {link.displayId}
-          </Link>
+            className="flex flex-row justify-between items-center">
+            <Link
+              href={`/${soldierNickname}/${link.displayId}`}
+              className="mr-4 flex-1">
+              <ListItem title={link.displayId} />
+            </Link>
+            <Button
+              type="button"
+              text="복사하기"
+              onClick={handleClick(link.displayId)}
+            />
+          </div>
         ))
       )}
     </>
