@@ -1,6 +1,6 @@
 import { FormEvent, useRef } from "react";
 import { useRouter } from "next/router";
-import { Button } from "@rookies-team/design";
+import { Button, Input } from "@rookies-team/design";
 import { httpClient } from "@/services";
 
 export const SoldierAddForm = () => {
@@ -22,17 +22,16 @@ export const SoldierAddForm = () => {
       body: JSON.stringify(data),
       method: "post",
     }).then((res) => {
-      console.log(res);
       router.push("/");
     });
   }
 
   return (
     <form onSubmit={handleSubmit}>
-      <input type="text" placeholder="부대명" ref={campIdRef} required />
-      <input type="text" placeholder="이름" ref={nameRef} required />
-      <input type="text" placeholder="별명" ref={nicknameRef} required />
-      <Button type="submit" text="등록하기" />
+      <Input type="text" placeholder="부대명" ref={campIdRef} required />
+      <Input type="text" placeholder="이름" ref={nameRef} required />
+      <Input type="text" placeholder="별명" ref={nicknameRef} required />
+      <Button type="submit" text="등록하기" className="mt-4" />
     </form>
   );
 };
