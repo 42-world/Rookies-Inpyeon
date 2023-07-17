@@ -2,6 +2,7 @@ import { GetServerSideProps } from "next";
 
 import { WriteForm } from "@/components";
 import { httpClient } from "@/services";
+import { Text } from "@rookies-team/design";
 
 interface Props {
   soldierNickname: string;
@@ -29,7 +30,7 @@ export default function Write({ soldierNickname, id }: Props) {
   if (!soldierNickname || !id) return <h1>존재하지 않는 군인 또는 id입니다</h1>;
   return (
     <>
-      <h1>{soldierNickname}</h1>
+      <Text size="heading2" text={soldierNickname} />
       <WriteForm linkId={id} />
     </>
   );

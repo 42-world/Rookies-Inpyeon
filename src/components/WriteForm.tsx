@@ -1,4 +1,5 @@
 import { FormEvent, useRef } from "react";
+import { Button, Input } from "@rookies-team/design";
 
 interface Props {
   linkId: number;
@@ -30,38 +31,37 @@ export const WriteForm = ({ linkId }: Props) => {
 
   return (
     <form onSubmit={handleSubmit} className="w-full flex flex-col items-center">
-      <input
+      <Input
         type="text"
         placeholder="제목"
-        className="border-2"
         maxLength={42}
         required
         ref={titleRef}
       />
-      <input
+      <Input
         type="text"
         placeholder="작성자"
-        className="border-2"
         maxLength={15}
         required
         ref={writerRef}
       />
-      <input
+      <Input
         type="password"
         placeholder="비밀번호"
-        className="border-2"
         maxLength={15}
         required
         ref={passwordRef}
       />
       <textarea
         placeholder="글 내용"
-        className="border-2"
+        className="border-2 mt-4"
+        cols={30}
+        rows={15}
         ref={contentRef}
         required
         maxLength={4000}
       />
-      <button type="submit">전송하기</button>
+      <Button type="submit" text="전송하기" className="mt-4" />
     </form>
   );
 };
