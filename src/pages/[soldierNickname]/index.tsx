@@ -56,27 +56,30 @@ export default function Links({ soldierNickname, soldier, links }: Props) {
           buttonText="링크 생성하기"
         />
       ) : (
-        // <TextWithButton
-        //   onClick={handleClick}
-        //   text={`아직 ${soldierNickname} 님에게 작성된 편지가 없어요.\n지금 바로 주변 사람들에게 링크를 전송해 보세요.`}
-        //   buttonText="내 우편함 링크 복사하기"
-        // />
-        links.map((link) => (
-          <div
-            key={`link-${link.id}`}
-            className="flex flex-row justify-between items-center">
-            <Link
-              href={`/${soldierNickname}/${link.displayId}`}
-              className="mr-4 flex-1">
-              <ListItem title={link.displayId} />
-            </Link>
-            <Button
-              type="button"
-              text="복사하기"
-              onClick={handleClick(link.displayId)}
-            />
-          </div>
-        ))
+        <>
+          {links.map((link) => (
+            <div
+              key={`link-${link.id}`}
+              className="flex flex-row justify-between items-center">
+              <Link
+                href={`/${soldierNickname}/${link.displayId}`}
+                className="mr-4 flex-1">
+                <ListItem
+                  title={link.description}
+                  secondaryTextFirst={link.displayId}
+                />
+              </Link>
+              <Button
+                type="button"
+                text="복사하기"
+                onClick={handleClick(link.displayId)}
+              />
+            </div>
+          ))}
+          <Link href={`/${soldierNickname}/create-link`} className="mt-4">
+            <Button type="button" text="링크 추가하기" />
+          </Link>
+        </>
       )}
     </>
   );
