@@ -1,11 +1,15 @@
 import { GetServerSideProps } from "next";
+import Link from "next/link";
 
 import { httpClient } from "@/services";
 import { Link as ResponseLink } from "@/types/Link";
-import Link from "next/link";
+import { SoldierInfo, TextWithButton } from "@/components";
+import { Soldier } from "@/types/Soldier";
+import { Button, Text } from "@rookies-team/design";
 
 interface Props {
   soldierNickname: string;
+  soldier: Soldier;
   links: ResponseLink[];
 }
 
@@ -22,27 +26,33 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       Cookie: context.req.headers.cookie,
     },
   });
-  if (!linkRes) return { props: { soldierNickname, links: null } };
+  if (!linkRes)
+    return { props: { soldierNickname, soldier: soldierRes, links: null } };
 
   return {
-    props: { soldierNickname, links: linkRes ?? null },
+    props: { soldierNickname, soldier: soldierRes, links: linkRes ?? null },
   };
 };
 
-export default function Links({ soldierNickname, links }: Props) {
+export default function Links({ soldierNickname, soldier, links }: Props) {
   if (!links) return <h1>존재하지 않는 군인입니다</h1>;
   return (
-    <main>
-      <h1>{soldierNickname} 링크 목록</h1>
-      <ul className="flex flex-col">
-        {links.map((link) => (
+    <>
+      <SoldierInfo soldier={soldier} />
+      {!links || links.length === 0 ? (
+        <TextWithButton
+          text={`아직 ${soldierNickname} 님에게 작성된 편지가 없어요.\n지금 바로 주변 사람들에게 링크를 전송해 보세요.`}
+          buttonText="내 우편함 링크 복사하기"
+        />
+      ) : (
+        links.map((link) => (
           <Link
             key={`link-${link.id}`}
             href={`/${soldierNickname}/${link.displayId}`}>
             {link.displayId}
           </Link>
-        ))}
-      </ul>
-    </main>
+        ))
+      )}
+    </>
   );
 }
