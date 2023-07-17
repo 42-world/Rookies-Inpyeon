@@ -36,7 +36,7 @@ export default function Write({ soldierNickname, displayId, id }: Props) {
     <>
       <SecondaryHeader
         link={`/${soldierNickname}/${displayId}`}
-        buttonText="<"
+        buttonText="←"
         headerText={soldierNickname}
       />
       <WriteForm linkId={id} />

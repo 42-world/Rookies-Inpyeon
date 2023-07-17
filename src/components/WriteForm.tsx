@@ -1,5 +1,5 @@
-import { FormEvent, useRef } from "react";
-import { Button, Input } from "@rookies-team/design";
+import { FormEvent, useRef, useState } from "react";
+import { Button, Checkbox, Input } from "@rookies-team/design";
 import { useRouter } from "next/router";
 
 interface Props {
@@ -11,6 +11,7 @@ export const WriteForm = ({ linkId }: Props) => {
   const writerRef = useRef<HTMLInputElement | null>(null);
   const contentRef = useRef<HTMLTextAreaElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
+  const [isSecret, setIsSecret] = useState(false);
   const router = useRouter();
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
@@ -34,28 +35,32 @@ export const WriteForm = ({ linkId }: Props) => {
     });
   }
 
+  const handleChangeCheckbox = () => {
+    setIsSecret((prev) => !prev);
+  };
+
   return (
     <form onSubmit={handleSubmit} className="w-full flex flex-col items-center">
-      <Input
-        type="text"
-        placeholder="제목"
-        maxLength={42}
-        required
-        ref={titleRef}
+      <Checkbox
+        checked={isSecret}
+        labelText="비밀글"
+        onChange={handleChangeCheckbox}
       />
+      {isSecret && (
+        <Input
+          type="password"
+          placeholder="비밀번호"
+          maxLength={15}
+          required
+          ref={passwordRef}
+        />
+      )}
       <Input
         type="text"
         placeholder="작성자"
         maxLength={15}
         required
         ref={writerRef}
-      />
-      <Input
-        type="password"
-        placeholder="비밀번호"
-        maxLength={15}
-        required
-        ref={passwordRef}
       />
       <textarea
         placeholder="글 내용"
