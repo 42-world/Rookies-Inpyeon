@@ -1,10 +1,16 @@
-import Link from "next/link";
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import { ListItem } from "@rookies-team/design";
 
 import { Letter } from "@/types/Letter";
+import { Soldier } from "@/types/Soldier";
 import { httpClient } from "@/services";
+import { SoldierInfo } from "@/components";
+
+interface Props {
+  soldier: Soldier;
+  letters: Letter[] | null;
+}
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   console.log("cookie: ", context.req.headers.cookie);
@@ -26,11 +32,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     path: `/letter/by/linkId/${linkRes.id}`,
   });
   return {
-    props: { letters: letterRes ?? null },
+    props: { soldier: soldierRes, letters: letterRes ?? null },
   };
 };
 
-export default function Letters({ letters }: { letters: Letter[] | null }) {
+export default function Letters({ soldier, letters }: Props) {
   const {
     query: { soldierNickname, displayId },
   } = useRouter();
@@ -39,7 +45,7 @@ export default function Letters({ letters }: { letters: Letter[] | null }) {
   if (!letters) return <h1>군인 혹은 링크가 잘못되었습니다</h1>;
   return (
     <main>
-      <h1>편지 목록</h1>
+      <SoldierInfo soldier={soldier} />
       <ul className="flex flex-col">
         {letters &&
           letters.map((letter) => (
