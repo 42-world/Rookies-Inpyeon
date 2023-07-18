@@ -1,11 +1,12 @@
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
-import { ListItem } from "@rookies-team/design";
+import { Button, ListItem } from "@rookies-team/design";
 
 import { Letter } from "@/types/Letter";
 import { Soldier } from "@/types/Soldier";
 import { httpClient } from "@/services";
 import { SoldierInfo } from "@/components";
+import Link from "next/link";
 
 interface Props {
   soldier: Soldier;
@@ -45,6 +46,9 @@ export default function Letters({ soldier, letters }: Props) {
   return (
     <>
       <SoldierInfo soldier={soldier} />
+      <Link href={`/${soldierNickname}/${displayId}/write`}>
+        <Button type="button" text="편지 쓰러가기" />
+      </Link>
       <ul className="flex flex-col">
         {letters &&
           letters.map((letter) => (
