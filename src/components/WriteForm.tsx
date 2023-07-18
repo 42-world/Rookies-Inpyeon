@@ -71,7 +71,7 @@ export const WriteForm = ({ linkId }: Props) => {
       />
       <textarea
         placeholder="군인에게 전달하고 싶은 내용을 입력해 주세요."
-        className="rounded-xl flex-1 border mt-4 w-full px-4 py-2 placeholder:text-[#B5B5B5]"
+        className="border-border-primary bg-transparent focus-within:border-color-blue_200 dark:border-border-primary_dark rounded-xl flex-1 border mt-4 w-full px-4 py-2 placeholder:text-text-tertiary"
         ref={contentRef}
         required
         maxLength={4000}
