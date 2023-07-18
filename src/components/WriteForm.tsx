@@ -43,7 +43,7 @@ export const WriteForm = ({ linkId }: Props) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="w-full flex flex-col items-start gap-4">
+      className="w-full h-full py-4 flex flex-col items-start gap-4">
       <Checkbox
         checked={isSecret}
         labelText="비밀글"
@@ -71,7 +71,7 @@ export const WriteForm = ({ linkId }: Props) => {
       />
       <textarea
         placeholder="군인에게 전달하고 싶은 내용을 입력해 주세요."
-        className="border-2 mt-4 w-full px-4 py-2"
+        className="rounded-xl flex-1 border mt-4 w-full px-4 py-2 placeholder:text-[#B5B5B5]"
         ref={contentRef}
         required
         maxLength={4000}
