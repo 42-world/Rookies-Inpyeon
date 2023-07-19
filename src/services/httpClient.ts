@@ -18,7 +18,7 @@ export async function httpClient({
     credentials: "include",
   });
 
-  console.log({
+  console.log(process.env.NEXT_PUBLIC_SERVER_URL + path, {
     method: method,
     body,
     headers: { ...headers, "Content-Type": "application/json;charset=utf-8" },
