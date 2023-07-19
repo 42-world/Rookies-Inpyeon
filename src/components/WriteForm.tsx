@@ -29,11 +29,12 @@ export const WriteForm = ({ linkId }: Props) => {
       path: "/letter",
       method: "POST",
       body: JSON.stringify(data),
-    }).then((res) => {
-      if (!res) return;
-      alert("편지가 정상적으로 등록되었습니다");
-      router.reload();
-    });
+    })
+      .then(() => {
+        alert("편지가 정상적으로 등록되었습니다");
+        router.reload();
+      })
+      .catch((e) => alert(e));
   }
 
   const handleChangeCheckbox = () => {
