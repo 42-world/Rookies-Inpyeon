@@ -13,14 +13,28 @@ interface Props {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { soldierNickname, displayId, letterId } = context.query;
-  const letterRes = await httpClient({ path: `/letter/${letterId}` });
+  const { soldierNickname, displayId, letterId, password } = context.query;
+
+  const letterRes = await httpClient({
+    path: `/letter/${letterId}${password ? `?password=${password}` : ""}`,
+  });
   return {
     props: { soldierNickname, displayId, letter: letterRes },
   };
 };
 
 export default function Letter({ soldierNickname, displayId, letter }: Props) {
+  if (!letter)
+    return (
+      <>
+        <SecondaryHeader
+          link={`/${soldierNickname}/${displayId}`}
+          buttonText="←"
+        />
+        <Text size="heading2" weight="semibold" text="비밀번호가 틀렸습니다." />
+      </>
+    );
+
   const distance = getDateDistance(new Date(letter.createdAt), new Date());
   const distanceDate =
     distance.days > 1
