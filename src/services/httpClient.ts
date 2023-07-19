@@ -18,6 +18,7 @@ export async function httpClient({
     credentials: "include",
   });
   if (!(res.status >= 200 && res.status < 400)) {
+    console.log(res);
     return null;
   }
 
