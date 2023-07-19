@@ -1,4 +1,7 @@
-import { FormEvent, useRef } from "react";
+import { FormEvent, useRef, useState } from "react";
+import { Button, Checkbox, Input } from "@rookies-team/design";
+import { useRouter } from "next/router";
+import { httpClient } from "@/services";
 
 interface Props {
   linkId: number;
@@ -9,59 +12,72 @@ export const WriteForm = ({ linkId }: Props) => {
   const writerRef = useRef<HTMLInputElement | null>(null);
   const contentRef = useRef<HTMLTextAreaElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
+  const [isSecret, setIsSecret] = useState(false);
+  const router = useRouter();
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const data = {
+    const data: Record<string, string | number | undefined> = {
       title: titleRef.current?.value,
       writer: writerRef.current?.value,
       content: contentRef.current?.value,
       linkId,
-      password: passwordRef.current?.value,
     };
-    fetch("http://localhost:8889/letter", {
-      headers: {
-        "Content-Type": "application/json;charset=utf-8",
-      },
-      method: "post",
+    if (isSecret) data.password = passwordRef.current?.value;
+
+    httpClient({
+      path: "/letter",
+      method: "POST",
       body: JSON.stringify(data),
-    }).then((res) => console.log(res));
+    })
+      .then(() => {
+        alert("편지가 정상적으로 등록되었습니다");
+        router.reload();
+      })
+      .catch((e) => alert(e));
   }
 
+  const handleChangeCheckbox = () => {
+    setIsSecret((prev) => !prev);
+  };
+
   return (
-    <form onSubmit={handleSubmit} className="w-full flex flex-col items-center">
-      <input
-        type="text"
-        placeholder="제목"
-        className="border-2"
-        maxLength={42}
-        required
-        ref={titleRef}
+    <form
+      onSubmit={handleSubmit}
+      className="w-full h-full py-4 flex flex-col items-start gap-4">
+      <Checkbox
+        checked={isSecret}
+        labelText="비밀글"
+        onChange={handleChangeCheckbox}
       />
-      <input
+      {isSecret && (
+        <Input
+          label="비밀번호"
+          placeholder="비밀번호를 입력해 주세요."
+          type="password"
+          maxLength={15}
+          required={true}
+          className="w-full"
+          ref={passwordRef}
+        />
+      )}
+      <Input
+        label="이름"
+        placeholder="군인에게 보여질 이름을 입력해 주세요."
         type="text"
-        placeholder="작성자"
-        className="border-2"
-        maxLength={15}
-        required
+        maxLength={20}
+        required={true}
+        className="w-full"
         ref={writerRef}
       />
-      <input
-        type="password"
-        placeholder="비밀번호"
-        className="border-2"
-        maxLength={15}
-        required
-        ref={passwordRef}
-      />
       <textarea
-        placeholder="글 내용"
-        className="border-2"
+        placeholder="군인에게 전달하고 싶은 내용을 입력해 주세요."
+        className="border-border-primary bg-transparent focus-within:border-color-blue_200 dark:border-border-primary_dark rounded-xl flex-1 border mt-4 w-full px-4 py-2 placeholder:text-text-tertiary"
         ref={contentRef}
         required
         maxLength={4000}
       />
-      <button type="submit">전송하기</button>
+      <Button type="submit" text="전송하기" className="mt-4" />
     </form>
   );
 };

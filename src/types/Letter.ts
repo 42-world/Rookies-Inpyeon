@@ -10,3 +10,10 @@ export interface Letter {
   updatedAt: string;
   deletedAt?: string;
 }
+
+export interface LetterShort {
+  id: number;
+  writer: string;
+  createdAt: string;
+  hasPassword: boolean;
+}

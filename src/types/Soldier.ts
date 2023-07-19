@@ -1,10 +1,15 @@
 export interface Soldier {
   id: number;
-  campId: string;
-  registerUserId: number;
   name: string;
   nickname: string;
-  createdAt: string;
-  updatedAt: string;
-  deletedAt?: string;
+  campId?: string;
+  soldierType: string;
+  soldierClass: string;
+  troopName: string;
+  birth: string;
+  enterDate: string;
+  registerUserId: number;
+  createdAt: Date;
+  updatedAt: Date;
+  deletedAt: Date;
 }

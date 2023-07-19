@@ -21,7 +21,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   });
   if (!soldierRes) return { props: { soldiers: null } };
 
-  console.log(soldierRes);
   return {
     props: { soldiers: soldierRes },
   };
