@@ -17,6 +17,14 @@ export async function httpClient({
     headers: { ...headers, "Content-Type": "application/json;charset=utf-8" },
     credentials: "include",
   });
+
+  console.log({
+    method: method,
+    body,
+    headers: { ...headers, "Content-Type": "application/json;charset=utf-8" },
+    credentials: "include",
+  });
+
   if (!(res.status >= 200 && res.status < 400)) {
     console.log(res);
     return null;
