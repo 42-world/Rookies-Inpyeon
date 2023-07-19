@@ -1,11 +1,11 @@
-import { GetServerSideProps } from "next";
 import { Button } from "@rookies-team/design";
+import { GetServerSideProps } from "next";
 import Link from "next/link";
 
-import { Letter, LetterShort } from "@/types/Letter";
-import { Soldier } from "@/types/Soldier";
+import { LetterLink, SoldierInfo } from "@/components";
 import { httpClient } from "@/services";
-import { SoldierInfo, LetterLink } from "@/components";
+import { LetterShort } from "@/types/Letter";
+import { Soldier } from "@/types/Soldier";
 
 interface Props {
   soldierNickname: string;
@@ -15,7 +15,6 @@ interface Props {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  console.log("cookie: ", context.req.headers.cookie);
   const { soldierNickname, displayId } = context.query;
   const soldierRes = await httpClient({
     path: `/soldier?nickname=${soldierNickname}`,

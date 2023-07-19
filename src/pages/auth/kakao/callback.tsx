@@ -11,7 +11,6 @@ export default function KakaoCallback() {
   useEffect(() => {
     if (code) {
       httpClient({ path: `/auth/kakao/callback?code=${code}` }).then((res) => {
-        console.log(res);
         push("/"); // 로그인 성공 시 메인 페이지로 이동
       });
     }
