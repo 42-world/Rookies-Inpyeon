@@ -1,16 +1,17 @@
 import { GetServerSideProps } from "next";
 import Link from "next/link";
 
+import { SoldierInfo, TextWithButton } from "@/components";
 import { httpClient } from "@/services";
 import { Link as ResponseLink } from "@/types/Link";
-import { SoldierInfo, TextWithButton } from "@/components";
 import { Soldier } from "@/types/Soldier";
-import { Button, ListItem, Text } from "@rookies-team/design";
+import { Button, ListItem } from "@rookies-team/design";
 
 interface Props {
   soldierNickname: string;
   soldier: Soldier;
   links: ResponseLink[];
+  host: string;
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
@@ -30,17 +31,25 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     return { props: { soldierNickname, soldier: soldierRes, links: null } };
 
   return {
-    props: { soldierNickname, soldier: soldierRes, links: linkRes ?? null },
+    props: {
+      soldierNickname,
+      soldier: soldierRes,
+      links: linkRes ?? null,
+      host: context.req.headers.host,
+    },
   };
 };
 
-export default function Links({ soldierNickname, soldier, links }: Props) {
+export default function Links({
+  soldierNickname,
+  soldier,
+  links,
+  host,
+}: Props) {
   const handleClick = (displayId: string) => {
     return () => {
       navigator.clipboard
-        .writeText(
-          `http://localhost:3000/${soldier.nickname}/${displayId}/write`
-        )
+        .writeText(`https://${host}/${soldier.nickname}/${displayId}/write`)
         .then(() => alert("링크가 복사되었어요!"));
     };
   };
@@ -60,10 +69,12 @@ export default function Links({ soldierNickname, soldier, links }: Props) {
           {links.map((link) => (
             <div
               key={`link-${link.id}`}
-              className="flex flex-row justify-between items-center">
+              className="flex flex-row justify-between items-center"
+            >
               <Link
                 href={`/${soldierNickname}/${link.displayId}`}
-                className="mr-4 flex-1">
+                className="mr-4 flex-1"
+              >
                 <ListItem
                   title={link.description}
                   secondaryTextFirst={link.displayId}
