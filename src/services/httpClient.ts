@@ -11,7 +11,7 @@ export async function httpClient({
   body,
   headers,
 }: Props) {
-  const res = await fetch("http://localhost:8888" + path, {
+  const res = await fetch(process.env.NEXT_PUBLIC_SERVER_URL + path, {
     method: method,
     body,
     headers: { ...headers, "Content-Type": "application/json;charset=utf-8" },
