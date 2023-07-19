@@ -12,7 +12,7 @@ export const SoldierInfo = ({ soldier }: Props) => {
       <AvatarText
         src="https://picsum.photos/200/300"
         mainText={soldier.name}
-        subText={soldier.campId}
+        subText={soldier.troopName + " ∙ " + soldier.soldierType}
         alt="soldier profile picture"
         size="64px"
       />
