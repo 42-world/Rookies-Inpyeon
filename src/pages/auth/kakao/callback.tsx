@@ -1,3 +1,4 @@
+import { httpClient } from "@/services";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 
@@ -9,10 +10,7 @@ export default function KakaoCallback() {
 
   useEffect(() => {
     if (code) {
-      fetch(`http://localhost:8889/auth/kakao/callback?code=${code}`, {
-        method: "GET",
-        credentials: "include",
-      }).then((res) => {
+      httpClient({ path: `/auth/kakao/callback?code=${code}` }).then((res) => {
         push("/"); // 로그인 성공 시 메인 페이지로 이동
       });
     }

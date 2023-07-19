@@ -1,9 +1,10 @@
 import { GetServerSideProps } from "next";
 import { getDateDistance, getDateDistanceText } from "@toss/date";
+import { Text } from "@rookies-team/design";
 
 import { SecondaryHeader } from "@/components";
 import { Letter } from "@/types/Letter";
-import { Text } from "@rookies-team/design";
+import { httpClient } from "@/services";
 
 interface Props {
   soldierNickname: string;
@@ -13,10 +14,9 @@ interface Props {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { soldierNickname, displayId, letterId } = context.query;
-  const res = await fetch(`http://localhost:8889/letter/${letterId}`);
-  const letter = await res.json();
+  const letterRes = await httpClient({ path: `/letter/${letterId}` });
   return {
-    props: { soldierNickname, displayId, letter },
+    props: { soldierNickname, displayId, letter: letterRes },
   };
 };
 

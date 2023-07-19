@@ -11,14 +11,13 @@ export async function httpClient({
   body,
   headers,
 }: Props) {
-  const res = await fetch("http://localhost:8889" + path, {
+  const res = await fetch("http://localhost:8888" + path, {
     method: method,
     body,
     headers: { ...headers, "Content-Type": "application/json;charset=utf-8" },
     credentials: "include",
   });
   if (!(res.status >= 200 && res.status < 400)) {
-    console.log(res);
     return null;
   }
 
