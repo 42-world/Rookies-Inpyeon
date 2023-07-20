@@ -55,7 +55,7 @@ export default function Letters({
       <Link href={`/${soldierNickname}/${displayId}/write`}>
         <Button type="button" text="편지 쓰러가기" />
       </Link>
-      <ul className="flex flex-col">
+      <ul className="flex flex-col-reverse">
         {letters &&
           letters.map((letter) => (
             <LetterLink
