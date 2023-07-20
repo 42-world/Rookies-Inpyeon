@@ -31,7 +31,7 @@ export const LetterLink = ({ letter, soldierNickname, displayId }: Props) => {
 
   if (letter.hasPassword) {
     return (
-      <>
+      <div className="flex flex-col">
         <ListItem
           onClick={() => setIsActive((prev) => !prev)}
           secondaryTextFirst={distanceDate}
@@ -47,7 +47,7 @@ export const LetterLink = ({ letter, soldierNickname, displayId }: Props) => {
             <button disabled={!watch("password")}>이동</button>
           </form>
         )}
-      </>
+      </div>
     );
   }
   return (
