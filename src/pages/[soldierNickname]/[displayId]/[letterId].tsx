@@ -1,68 +1,35 @@
 import { GetServerSideProps } from "next";
-import { getDateDistance, getDateDistanceText } from "@toss/date";
-import { Text } from "@rookies-team/design";
 
-import { SecondaryHeader } from "@/components";
-import { Letter } from "@/types/Letter";
-import { httpClient } from "@/services";
-
+import { LetterViewForm, SecondaryHeader } from "@/components";
 interface Props {
   soldierNickname: string;
   displayId: string;
-  letter: Letter;
+  letterId: number;
+  password: string;
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { soldierNickname, displayId, letterId, password } = context.query;
-
-  const letterRes = await httpClient({
-    path: `/letter/${letterId}${password ? `?password=${password}` : ""}`,
-  });
+  if (!password)
+    return { props: { soldierNickname, displayId, letterId, password: null } };
   return {
-    props: { soldierNickname, displayId, letter: letterRes },
+    props: { soldierNickname, displayId, letterId, password },
   };
 };
 
-export default function Letter({ soldierNickname, displayId, letter }: Props) {
-  if (!letter)
-    return (
-      <>
-        <SecondaryHeader
-          link={`/${soldierNickname}/${displayId}`}
-          buttonText="←"
-        />
-        <Text size="heading2" weight="semibold" text="비밀번호가 틀렸습니다." />
-      </>
-    );
-
-  const distance = getDateDistance(new Date(letter.createdAt), new Date());
-  const distanceDate =
-    distance.days > 1
-      ? `${distance.days}일 전`
-      : `${distance.days * 24 + distance.hours}시간 전`;
-
+export default function Letter({
+  soldierNickname,
+  displayId,
+  letterId,
+  password,
+}: Props) {
   return (
     <>
       <SecondaryHeader
         link={`/${soldierNickname}/${displayId}`}
         buttonText="←"
       />
-      <div className="py-2">
-        <Text
-          size="body1"
-          weight="medium"
-          color="secondary"
-          text={distanceDate}
-        />
-        <Text size="heading2" weight="semibold" text={letter.title} />
-      </div>
-      <Text
-        size="body1"
-        weight="regular"
-        color="secondary"
-        text={letter.content}
-        className="py-4"
-      />
+      <LetterViewForm letterId={letterId} password={password} />
     </>
   );
 }

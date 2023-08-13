@@ -6,3 +6,4 @@ export { SoldierAddForm } from "./SoldierAddForm";
 export { LinkAddForm } from "./LinkAddForm";
 export { SecondaryHeader } from "./SecondaryHeader";
 export { LetterLink } from "./LetterLink";
+export { LetterViewForm } from "./LetterViewForm";
